@@ -74,7 +74,10 @@ void Profiler::Exit() {
 		{
 			for(const auto& data : v)
 			{
-                logFile << data.second.SymbolName_ << ",";
+                std::string name = data.second.SymbolName_;
+                std::string::iterator end_pos = std::remove(name.begin(), name.end(), ',');
+                name.erase(end_pos, name.end());
+                logFile << name << ",";
                 unsigned hitCount = data.second.HitCount_;
                 logFile << hitCount << ",";
                 logFile << (double)hitCount / (double)MAXSAMPLENUM * 100.0 << ",";
