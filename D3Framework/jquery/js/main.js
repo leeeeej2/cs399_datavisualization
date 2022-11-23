@@ -36,20 +36,50 @@ var ySvg = svg.append("g")
     .call(d3.axisLeft(y));
 
 var Num = $("#numFuncsFromGUI").val();
+$("#numFuncsFromGUI").on("change",  function(d){
+    Num = this.value;
+    //console.log(Num);
+    d3.json("data/ProfileReport_DataFix_ver2.json").then(function(data){
+
+        calculateHitCountByNum(data);l
+        /*var a = 0;
+        //console.log(data[arrayNum[0]]);
+        data[arrayNum[0]].forEach(function(d){
+            a += +d.HitCount;
+            //console.log(d.HitCount);
+        })
+        Hit.push(a);
+        console.log(Hit[0]);
+        */
+        //console.log(data["one"]);
+        //console.log(data[arrayNum[0]]);
+        //console.log(data[arrayNum[0]].HitCount);
+        //data.Hit_count = +data["one"].Hit_count;
+        /*for(var i = 0; i < arrayNum.length(); i++)
+        {
+            console.log(data[arrayNum[i]])
+            data[arrayNum[i]].map(function(d){
+                var Sum = 0;
+                for(var j = 0; j < Num; j++)
+                {
+                    console.log(d[j]);
+                    //Sum += (+d[j].Hit_count);
+                }
+                //console.log(Sum);
+            })
+        }*/
+        //console.log(data["one"]);
+        //data[]
+        update();
+    });
+});
 
 var Hit = [];
 var arrayNum = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"];
 
 d3.json("data/ProfileReport_DataFix_ver2.json").then(function(data){
-    for(var i = 0; i < arrayNum.length; i++)
-    {
-        var a = 0;
-        data[arrayNum[i]].forEach(function(d){
-            a += +d.HitCount;
-        })
-        Hit.push(a);
-        console.log(Hit[i]);
-    }
+
+    calculateHitCountByNum(data);l
     /*var a = 0;
     //console.log(data[arrayNum[0]]);
     data[arrayNum[0]].forEach(function(d){
@@ -81,10 +111,28 @@ d3.json("data/ProfileReport_DataFix_ver2.json").then(function(data){
     update();
 });
 
+function calculateHitCountByNum(data){
+    Hit = [];
+    for(var i = 0; i < arrayNum.length; i++)
+    {
+        var a = 0;
+        var Limit = 0;
+        data[arrayNum[i]].forEach(function(d, Limit){
+            //console.log(Num);
+            if(Limit < Num)
+            {
+                //console.log(Limit);   
+                a += +d.HitCount;
+                Limit += 1;
+            }
+        })
+        Hit.push(a);
+        console.log(Hit[i]);
+    }
+}
 
 function update(data){
 
-    
     /*var value = flag ? "Mobile_sub_Average" : "GDP_per_capita_Average";
 
     x.domain(data.map(function(d){ return d.Continent }));
