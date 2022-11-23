@@ -41,35 +41,7 @@ $("#numFuncsFromGUI").on("change",  function(d){
     //console.log(Num);
     d3.json("data/ProfileReport_DataFix_ver2.json").then(function(data){
 
-        calculateHitCountByNum(data);l
-        /*var a = 0;
-        //console.log(data[arrayNum[0]]);
-        data[arrayNum[0]].forEach(function(d){
-            a += +d.HitCount;
-            //console.log(d.HitCount);
-        })
-        Hit.push(a);
-        console.log(Hit[0]);
-        */
-        //console.log(data["one"]);
-        //console.log(data[arrayNum[0]]);
-        //console.log(data[arrayNum[0]].HitCount);
-        //data.Hit_count = +data["one"].Hit_count;
-        /*for(var i = 0; i < arrayNum.length(); i++)
-        {
-            console.log(data[arrayNum[i]])
-            data[arrayNum[i]].map(function(d){
-                var Sum = 0;
-                for(var j = 0; j < Num; j++)
-                {
-                    console.log(d[j]);
-                    //Sum += (+d[j].Hit_count);
-                }
-                //console.log(Sum);
-            })
-        }*/
-        //console.log(data["one"]);
-        //data[]
+        calculateHitCountByNum(data);
         update();
     });
 });
@@ -80,34 +52,6 @@ var arrayNum = ["one", "two", "three", "four", "five", "six", "seven", "eight", 
 d3.json("data/ProfileReport_DataFix_ver2.json").then(function(data){
 
     calculateHitCountByNum(data);l
-    /*var a = 0;
-    //console.log(data[arrayNum[0]]);
-    data[arrayNum[0]].forEach(function(d){
-        a += +d.HitCount;
-        //console.log(d.HitCount);
-    })
-    Hit.push(a);
-    console.log(Hit[0]);
-    */
-    //console.log(data["one"]);
-    //console.log(data[arrayNum[0]]);
-    //console.log(data[arrayNum[0]].HitCount);
-    //data.Hit_count = +data["one"].Hit_count;
-    /*for(var i = 0; i < arrayNum.length(); i++)
-    {
-        console.log(data[arrayNum[i]])
-        data[arrayNum[i]].map(function(d){
-            var Sum = 0;
-            for(var j = 0; j < Num; j++)
-            {
-                console.log(d[j]);
-                //Sum += (+d[j].Hit_count);
-            }
-            //console.log(Sum);
-        })
-    }*/
-    //console.log(data["one"]);
-    //data[]
     update();
 });
 
@@ -129,70 +73,15 @@ function calculateHitCountByNum(data){
         Hit.push(a);
         console.log(Hit[i]);
     }
+
 }
 
-function update(data){
+function update(){
+    var resizeY = Math.max(...Hit) + 1;
 
-    /*var value = flag ? "Mobile_sub_Average" : "GDP_per_capita_Average";
+    y.domain([0, resizeY]);
 
-    x.domain(data.map(function(d){ return d.Continent }));
-    y.domain([0, d3.max(data, function(d) { return d[value] })]);
-
-    // X-axis
-    var xAxisCall = d3.axisBottom(x);
-    g.append("g")
-    .attr("class", "x axis")
-    .attr("transform", "translate(0, " + height + ")")
-    .call(xAxisCall)
-    .selectAll("text")
-    .attr("y", "10")
-    .attr("x", "-5")
-    .attr("font-size", "12px")
-    
-    // Y-axis
-    var yAxisCall = d3.axisLeft(y).tickFormat(function(d){ return d; });
-    yAxisGroup.transition(t).call(yAxisCall);
-        
-    var rects = g.selectAll("rect").data(data, function(d){return d.Continent;});
-
-    rects.exit()
-        .remove();
-
-    rects.enter()
-        .append("rect")
-        .attr("x", function(d){ return x(d.Continent) })
-        .attr("width", x.bandwidth)
-        .attr("y", y(0))
-        .attr("height", 0)
-        .merge(rects)
-        .transition(t)
-        .attr("x", function(d){ return x(d.Continent) })
-        .attr("width", x.bandwidth)
-        .attr("y", function(d){ return y(d[value]); })
-        .attr("height", function(d){ return height - y(d[value]); })
-        .attr("fill", function(d){ 
-            if(d.Continent == "Asia") 
-            {
-                return colors[4];
-            }
-            else if(d.Continent == "Americas")
-            {
-                return colors[0];
-            }
-            else if(d.Continent == "Europe")
-            {
-                return colors[2];
-            }
-            else if(d.Continent == "Oceania")
-            {
-                return colors[1];
-            }
-            else if(d.Continent == "Africa")
-            {
-                return colors[3];
-            }
-        });
-    var label = flag ? "# Mobile Subscriber per 100 people Average " : "GDP Per Capita Average";
-    yLabel.text(label);*/
+    ySvg.transition().duration(1000)
+    .call(d3.axisLeft(y));
 }
 
