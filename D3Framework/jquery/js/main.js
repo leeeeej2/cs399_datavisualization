@@ -20,7 +20,7 @@ var g = svg.append("g")
 
 // Scales
 var x = d3.scaleLinear()
-    .domain([-100, 1000])
+    .domain([0, 10])
     .range([0, width]);
 
 var xSvg = svg.append("g")
@@ -35,7 +35,7 @@ var ySvg = svg.append("g")
     .attr("transform", "translate(50, 50)")
     .call(d3.axisLeft(y));
 
-d3.json("data/ProfileReport - DataFix.json").then(function(data){
+d3.json("data/ProfileReport_DataFix_ver2.json").then(function(data){
 
     console.log(data);
 
