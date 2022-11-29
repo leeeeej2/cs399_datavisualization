@@ -109,8 +109,6 @@ void Profiler::Sample() {
         auto timerEnd = std::chrono::high_resolution_clock::now();
         timer = std::chrono::duration_cast<std::chrono::seconds>(timerEnd - timerStart).count();
 
-        
-
         MainThread_ = OpenThread(
             THREAD_SUSPEND_RESUME |
             THREAD_GET_CONTEXT |
@@ -154,13 +152,6 @@ void Profiler::Sample() {
 
         const PSYMBOL_INFO symbols = GetSymbol(context.Rip, (PSYMBOL_INFO)buff);
 
-        /*for(int32_t count{1};;count++)
-        {
-	        if(!count%5)
-	        {
-		        
-	        }
-        }*/
         if (tempTimer != timer)
         {
             tempTimer = timer;
