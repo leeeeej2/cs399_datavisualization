@@ -39,7 +39,6 @@ var yAxisGroup = svg.append("g")
     .call(d3.axisLeft(y));
 
 d3.csv("data/ProfileReport.csv").then(function(data){
-
     calculateHitCountByNum(data);
     updateChart();
 });
@@ -55,25 +54,26 @@ $("#numFuncsFromGUI").on("change",  function(d){
     });
 });
 
-function calculateHitCountByNum(data){
+function calculateHitCountByNum(d){
     Hit = [];
     for(var i = 0; i < arrayNum.length; i++)
     {
         var a = 0;
         var Limit = 0;
-        console.log(data);
-        data["TimeInterval"].forEach(function(d, Limit){
-            //console.log(Num);
-            if(Limit < Num)
-            {
-                //console.log(Limit);   
-                a += +d.HitCount;
-                Limit += 1;
+        d.forEach(function (d){
+            if(d["TimeInterval"] == arrayNum[i]){
+                console.log(d.HitCount);
+                if(Limit < Num)
+                {
+                    //console.log(Limit);   
+                    a += +d.HitCount;
+                    Limit += 1;
+                }
+                d.Hits = +Hit[i];
+                //console.log(+d.HitCount);
             }
-            d.Hits = +Hit[i];
-        })
+        });
         Hit.push(a);
-        //console.log(Hit[i]);
     }
 }
 

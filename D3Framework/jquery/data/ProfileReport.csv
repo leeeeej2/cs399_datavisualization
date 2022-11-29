@@ -1,4 +1,4 @@
-TimeInterval, Function, HitCount, Time(ms), Time/Hit
+TimeInterval, Function,HitCount, Time(ms), Time/Hit
 0,NtUserMsgWaitForMultipleObjectsEx,121,9.674,0.0799504
 0,ZwWaitForSingleObject,61,5.8523,0.0959393
 0,NtQueryInformationThread,51,3.9807,0.0780529
