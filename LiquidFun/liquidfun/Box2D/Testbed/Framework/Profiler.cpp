@@ -65,7 +65,7 @@ void Profiler::Exit() {
 
     std::ofstream logFile("ProfileReport.csv");
 
-    logFile << "Time Interval, Function, Hit Count, Time(ms), Time/Hit\n";
+    logFile << "TimeInterval, Function, HitCount, Time(ms), Time/Hit\n";
 
     const size_t s = SampleVector.size();
     int time_interval = 0;
