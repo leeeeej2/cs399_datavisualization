@@ -72,19 +72,19 @@ function calculateHitCountByNum(data){
             d.Hits = +Hit[i];
         })
         Hit.push(a);
-        console.log(Hit[i]);
+        //console.log(Hit[i]);
     }
 }
 
-
 function updateChart(){
-    var xScale = d3.scaleBand().range([0, width]).padding(0.5);
+    
+    var xScale = d3.scaleBand().range([0, width]);
     var yScale = d3.scaleLinear().range([height, 0]);
 
     var resizeY = Math.max(...Hit) + 1;
     y.domain([0, resizeY]);
     xScale.domain(Hit);
-    yScale.domain([0, resizeY]);
+    yScale.domain([0, resizeY - 1]);
 
     yAxisGroup.transition().duration(1000)
     .call(d3.axisLeft(y));
@@ -97,8 +97,10 @@ function updateChart(){
     .attr("class", "bar")
     .attr("x", function(d) { return xScale(d); })
     .attr("y", function(d) { return yScale(d); })
-    .attr("width", xScale.bandwidth())
+    .attr("width", 50)
     .attr("height", function(d) { return height - yScale(d); });
+
+    console.log(Hit);
 
 }
 

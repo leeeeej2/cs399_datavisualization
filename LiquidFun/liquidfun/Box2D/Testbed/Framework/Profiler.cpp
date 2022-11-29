@@ -9,6 +9,7 @@
 #include <map>
 #include <vector>
 #include <windows.h>
+#include <algorithm>
 
 #pragma comment( lib, "dbghelp" )
 
@@ -64,41 +65,38 @@ void Profiler::Exit() {
 
     std::ofstream logFile("ProfileReport.csv");
 
-    logFile << "Function, Hit Count, Percentage, Time(ms), Index\n";
+    logFile << "Time Interval, Function, Hit Count, Time(ms), Time/Hit\n";
 
-    //const size_t size = samples.size();
     const size_t s = SampleVector.size();
+    int time_interval = 0;
 	if(s > 0)
 	{
 		for(const auto& v : SampleVector)
 		{
+            std::map<unsigned, std::pair<const unsigned long long, SampleInfo>, std::greater<>> m;
 			for(const auto& data : v)
 			{
-                std::string name = data.second.SymbolName_;
+                m.insert(std::make_pair(data.second.HitCount_, data));
+			}
+            for(const auto& data : m)
+            {
+                std::string name = data.second.second.SymbolName_;
+                unsigned hitCount = data.second.second.HitCount_;
+                double timeDuration = data.second.second.TimeDuration_;
+                if (name.empty())
+                    continue;
+                logFile << time_interval << ",";
                 std::string::iterator end_pos = std::remove(name.begin(), name.end(), ',');
                 name.erase(end_pos, name.end());
                 logFile << name << ",";
-                unsigned hitCount = data.second.HitCount_;
                 logFile << hitCount << ",";
-                logFile << (double)hitCount / (double)MAXSAMPLENUM * 100.0 << ",";
-                logFile << data.second.TimeDuration_ << ",";
-                logFile << data.second.index_ << '\n';
-			}
-            logFile << "-------------------------\n";
+                logFile << timeDuration << ",";
+                logFile << timeDuration / (double)hitCount << '\n';
+            }
+            m.clear();
+            ++time_interval;
 		}
 	}
-    /*if (size > 0)
-    {
-        for (const auto& data : samples)
-        {
-            logFile << data.second.SymbolName_ << ",";
-            unsigned hitCount = data.second.HitCount_;
-            logFile << hitCount << ",";
-            logFile << (double)hitCount / (double)MAXSAMPLENUM * 100.0 << ",";
-            logFile << data.second.TimeDuration_ << ",";
-            logFile << data.second.index_ << '\n';
-        }
-    }*/
 
     logFile.close();
 }
