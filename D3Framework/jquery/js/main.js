@@ -6,7 +6,7 @@
  */
 var Num = 4;
 var Hit = [];
-var arrayNum = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"];
+var arrayNum = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
 var margin = { left:80, right:100, top:50, bottom:100 };
 var height = 500 - margin.top - margin.bottom;
@@ -38,17 +38,17 @@ var yAxisGroup = svg.append("g")
     .attr("transform", "translate(50, 50)")
     .call(d3.axisLeft(y));
 
-// d3.csv("data/ProfileReport.csv").then(function(data){
+d3.csv("data/ProfileReport.csv").then(function(data){
 
-//     calculateHitCountByNum(data);
-//     updateChart();
-// });
+    calculateHitCountByNum(data);
+    updateChart();
+});
 
 var Num = $("#numFuncsFromGUI").val();
 $("#numFuncsFromGUI").on("change",  function(d){
     Num = this.value;
     //console.log(Num);
-    d3.json("data/ProfileReport_DataFix_ver2.json").then(function(data){
+    d3.csv("data/ProfileReport.csv").then(function(data){
 
         calculateHitCountByNum(data);
         updateChart();
@@ -61,7 +61,8 @@ function calculateHitCountByNum(data){
     {
         var a = 0;
         var Limit = 0;
-        data[arrayNum[i]].forEach(function(d, Limit){
+        console.log(data);
+        data["TimeInterval"].forEach(function(d, Limit){
             //console.log(Num);
             if(Limit < Num)
             {
