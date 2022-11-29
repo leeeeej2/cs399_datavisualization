@@ -1,4 +1,4 @@
-TimeInterval, Function, HitCount, Time(ms), Time/Hit
+TimeInterval, Function,HitCount, Time(ms), Time/Hit
 0,NtWaitForSingleObject,209,11.6539,0.0557603
 0,ZwQueryInformationThread,116,5.7094,0.049219
 0,ZwYieldExecution,50,5.7227,0.114454
