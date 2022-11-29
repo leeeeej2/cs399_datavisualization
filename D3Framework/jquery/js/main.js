@@ -38,11 +38,11 @@ var yAxisGroup = svg.append("g")
     .attr("transform", "translate(50, 50)")
     .call(d3.axisLeft(y));
 
-d3.csv("data/ProfileReport.csv").then(function(data){
+// d3.csv("data/ProfileReport.csv").then(function(data){
 
-    calculateHitCountByNum(data);
-    updateChart();
-});
+//     calculateHitCountByNum(data);
+//     updateChart();
+// });
 
 var Num = $("#numFuncsFromGUI").val();
 $("#numFuncsFromGUI").on("change",  function(d){

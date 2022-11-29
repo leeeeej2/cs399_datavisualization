@@ -73,10 +73,11 @@ void Profiler::Exit() {
 	{
 		for(const auto& v : SampleVector)
 		{
-            std::map<unsigned, std::pair<const unsigned long long, SampleInfo>, std::greater<>> m;
+            std::map<float, std::pair<const unsigned long long, SampleInfo>, std::greater<>> m;
 			for(const auto& data : v)
 			{
-                m.insert(std::make_pair(data.second.HitCount_, data));
+                float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+                m.insert(std::make_pair((float)data.second.HitCount_ + r, data));
 			}
             for(const auto& data : m)
             {
