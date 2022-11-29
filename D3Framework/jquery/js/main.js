@@ -38,7 +38,7 @@ var yAxisGroup = svg.append("g")
     .attr("transform", "translate(50, 50)")
     .call(d3.axisLeft(y));
 
-d3.json("data/ProfileReport_DataFix_ver2.json").then(function(data){
+d3.csv("data/ProfileReport.csv").then(function(data){
 
     calculateHitCountByNum(data);
     updateChart();
