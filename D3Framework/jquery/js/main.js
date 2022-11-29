@@ -62,7 +62,7 @@ function calculateHitCountByNum(d){
         var Limit = 0;
         d.forEach(function (d){
             if(d["TimeInterval"] == arrayNum[i]){
-                console.log(d.HitCount);
+                //console.log(d.HitCount);
                 if(Limit < Num)
                 {
                     //console.log(Limit);   
