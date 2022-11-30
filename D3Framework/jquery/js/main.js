@@ -23,9 +23,11 @@ var arrayNum = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 var margin = { left:80, right:100, top:50, bottom:100 };
 var height = 500 - margin.top - margin.bottom;
 var width = 900 - margin.left - margin.right;
+var radius = Math.min(width, height) / 2;
 
 var svg = d3.select("#chart-area")
     .append("svg")
+    .attr("radius", radius)
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     
@@ -147,6 +149,15 @@ function updateChart(){
     yAxisGroup.transition().duration(1000)
     .call(d3.axisLeft(y));
 
+    var div = d3.select("body")
+    .append("div")
+    .attr("class", "tooltip-donut")
+    .style("opacity", "0");
+
+    var ordScale = d3.scaleOrdinal()
+    .domain(newHit)
+    .range(['#ffd384','#94ebcd','#fbaccc','#d3e0ea','#fa7f72']);
+
     g.selectAll(".bar").remove();
 
     g.selectAll(".bar")
@@ -164,13 +175,70 @@ function updateChart(){
             .transition()
             .duration("50")
             .attr("opacity", "0.3");
+
+        div.transition()
+            .duration("50")
+            .attr("opacity", "1");
+        
+        //draw pop up pie chart
+        var pie = d3.pie().value(function(d) { 
+                return d.value; 
+            });
+
+        var arc = g.selectAll("arc")
+                   .data(pie(newHit))
+                   .enter();
+        
+        var path = d3.arc()
+                   .outerRadius(radius)
+                   .innerRadius(0);
+
+        arc.append("path")
+         .attr("d", path)
+         .attr("fill", function(d) { return ordScale(d.key); })
+         .attr("transform", "translate(" + (width / 2 - 120) + "," + 20 + ")");
+
+        var label = d3.arc()
+            .outerRadius(radius)
+            .innerRadius(0);
+
+        arc.append("text")
+            .attr("transform", function(d) { 
+            return "translate(" + label.centroid(d) + ")"; 
+            })
+            .text(function(d) { return d.key; })
+            .style("font-family", "arial")
+            .style("font-size", 15);
+        /////////////////////
+
+        g.append("text")
+                .attr("class", "value")
+                .attr("x", function(){return xScale(d.key) - 30;})
+                .attr("y", function(){return yScale(d.value);})
+                .text(function(){return d.value});
+        
+        //g.append("g")
+        //    .attr("transform", "translate(" + (width / 2 - 120) + "," + 20 + ")")
+        //    .append("text")
+        //    .text("Browser use statistics - Jan 2017")
+        //    .attr("class", "title")
     })
     .on("mouseout", function(d)
     {
         d3.select(this)
-        .transition()
-        .duration("50")
-        .attr("opacity", "1");
+            .transition()
+            .duration("50")
+            .attr("opacity", "1");
+
+        div.transition()
+            .duration("50")
+            .attr("opacity", "0");
+
+        d3.selectAll(".value")
+            .remove();
+        
+        d3.selectAll("path")
+            .remove();
     });
 
     /*
