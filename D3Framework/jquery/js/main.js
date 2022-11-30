@@ -130,13 +130,13 @@ function calculateHitCountByNum(d){
         });
         Hit.push(a);
     }
-    console.log(Ratio1);
+    //console.log(Ratio1);
 }
 
 function updateChart(){
     //var uniqueValues = d3.map([])
     var newHit = Hit.map(function(val, index){return {key:index, value:val};})
-    console.log(newHit);
+    //console.log(newHit);
 
     var xScale = d3.scaleBand().range([0, width]);
     var yScale = d3.scaleLinear().range([height, 0]);
@@ -179,15 +179,21 @@ function updateChart(){
         div.transition()
             .duration("50")
             .attr("opacity", "1");
+
+        g.selectAll("arc").remove();
+
         
         //draw pop up pie chart
         var pie = d3.pie().value(function(d) { 
                 return d.value; 
             });
 
+        var d_ = pie(d3.entries(Ratio0))
+
         var arc = g.selectAll("arc")
-                   .data(pie(newHit))
+                   .data(pie(d_))
                    .enter();
+
         
         var path = d3.arc()
                    .outerRadius(radius)
@@ -195,7 +201,7 @@ function updateChart(){
 
         arc.append("path")
          .attr("d", path)
-         .attr("fill", function(d) { return ordScale(d.key); })
+         .attr("fill", function(d) { return ordScale(d.data.value); })
          .attr("transform", "translate(" + (width / 2 - 120) + "," + 20 + ")");
 
         var label = d3.arc()
@@ -206,7 +212,7 @@ function updateChart(){
             .attr("transform", function(d) { 
             return "translate(" + label.centroid(d) + ")"; 
             })
-            .text(function(d) { return d.key; })
+            .text(function(d) { return d.data.key; })
             .style("font-family", "arial")
             .style("font-size", 15);
         /////////////////////
