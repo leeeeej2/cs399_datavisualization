@@ -94,7 +94,6 @@ function updateChart(){
     yAxisGroup.transition().duration(1000)
     .call(d3.axisLeft(y));
 
-    
     g.selectAll(".bar").remove();
 
     g.selectAll(".bar")
@@ -105,9 +104,53 @@ function updateChart(){
     .attr("width", xScale.bandwidth())
     .attr("y", function(d) { return yScale(d.value); })
     .attr("width", width/10)
-    .attr("height", function(d) { return height - yScale(d.value); });
+    .attr("height", function(d) { return height - yScale(d.value); })                
+    .on("mouseover", function(d)
+    {
+        d3.select(this)
+            .transition()
+            .duration("50")
+            .attr("opacity", "0.3");
+    })
+    .on("mouseout", function(d)
+    {
+        d3.select(this)
+        .transition()
+        .duration("50")
+        .attr("opacity", "1");
+    });
+
+    /*
+        var rects = g.selectAll(".bar")
+                .data(newHit)            
+                .on("mouseover", function(d)
+                {
+                    d3.select(this)
+                        .transition()
+                        .duration("50")
+                        .attr("opacity", "0.3");
+                })
+                .on("mouseout", function(d)
+                {
+                    d3.select(this)
+                    .transition()
+                    .duration("50")
+                    .attr("opacity", "1");
+                });
+
+                
+    rects.enter()
+        .data(newHit)  
+        .append("rect")
+        .attr("class", "bar")
+        .attr("x", function(d) { return xScale(d.key) - 30; })
+        .attr("width", xScale.bandwidth())
+        .attr("y", function(d) { return yScale(d.value); })
+        .attr("width", width/10)
+        .attr("height", function(d) { return height - yScale(d.value); });
 
     
+    */
     /*
     var xScale = d3.scaleBand().range([0, width]);
     var yScale = d3.scaleLinear().range([height, 0]);
