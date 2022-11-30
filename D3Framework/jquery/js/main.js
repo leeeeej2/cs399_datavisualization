@@ -101,10 +101,10 @@ function updateChart(){
     .data(newHit)
     .enter().append("rect")
     .attr("class", "bar")
-    .attr("x", function(d) { return xScale(d.key); })
+    .attr("x", function(d) { return xScale(d.key) - 30; })
     .attr("width", xScale.bandwidth())
     .attr("y", function(d) { return yScale(d.value); })
-    .attr("width", 50)
+    .attr("width", width/10)
     .attr("height", function(d) { return height - yScale(d.value); });
 
     
