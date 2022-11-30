@@ -151,24 +151,21 @@ function updateChart(){
 
     var div = d3.select("body")
     .append("div")
-    .attr("class", "tooltip-donut")
     .style("opacity", "0");
-
+    
     var ordScale = d3.scaleOrdinal()
     .domain(newHit)
     .range(['#ffd384','#94ebcd','#fbaccc','#d3e0ea','#fa7f72']);
 
-    g.selectAll(".bar").remove();
+    g.selectAll(".bar").remove(); 
 
     g.selectAll(".bar")
     .data(newHit)
     .enter().append("rect")
     .attr("class", "bar")
     .attr("x", function(d) { return xScale(d.key) - 30; })
+    //.attr("y", function(d) { return height; })
     .attr("width", xScale.bandwidth())
-    .attr("y", function(d) { return yScale(d.value); })
-    .attr("width", width/10)
-    .attr("height", function(d) { return height - yScale(d.value); })                
     .on("mouseover", function(d)
     {
         d3.select(this)
@@ -227,8 +224,15 @@ function updateChart(){
                    .enter();
         
         var path = d3.arc()
-                   .outerRadius(radius)
-                   .innerRadius(0);
+                    .innerRadius(radius * 0.5)
+                    .outerRadius(radius * 0.8)
+                    .padAngle(.02)
+                    .padRadius(100)
+                    .cornerRadius(2);
+
+        var outerArc = d3.arc()
+                .innerRadius(radius * 0.9)
+                .outerRadius(radius * 0.9)
 
         arc.append("path")
          .attr("d", path)
@@ -246,19 +250,48 @@ function updateChart(){
             .text(function(d) { return d.data.key; })
             .style("font-family", "arial")
             .style("font-size", 15);
-        /////////////////////
 
+        g.selectAll('allPolylines')
+            .data(d_)
+            .enter()
+            .append('polyline')
+            .attr("stroke", "black")
+            .style("fill", "none")
+            .attr("stroke-width", 1)
+            .attr('points', function(d) {
+                var posA = path.centroid(d) 
+                var posB = outerArc.centroid(d) 
+                var posC = outerArc.centroid(d); 
+                var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2 
+                posC[0] = radius * 0.95 * (midangle < 3.14 ? 1 : -1); 
+                return [posA, posB, posC]
+            })
+            .attr("transform", "translate(" + (width / 2 - 50) + "," + height * 1.7 + ")");
+            
+
+        g.selectAll('allLabels')
+            .data(d_)
+            .enter()
+            .append('text')
+            .attr("class", "labelText")
+            .text( function(d) { console.log(d.data.key) ; return d.data.key } )
+            .attr('transform', function(d) {
+                  var pos = outerArc.centroid(d);
+                  var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
+                  pos[0] = radius * 0.99 * (midangle < Math.PI ? 1 : -1);
+                  return "translate(" + (width / 2 - 50) + pos + "," +  height * 1.7 + ")";
+              })
+            .style('text-anchor', function(d) {
+                  var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
+                  return (midangle < Math.PI ? 'start' : 'end')
+              });
+        /////////////////////
+        
         g.append("text")
                 .attr("class", "value")
                 .attr("x", function(){return xScale(d.key) - 30;})
                 .attr("y", function(){return yScale(d.value);})
                 .text(function(){return d.value});
-        
-        //g.append("g")
-        //    .attr("transform", "translate(" + (width / 2 - 120) + "," + 20 + ")")
-        //    .append("text")
-        //    .text("Browser use statistics - Jan 2017")
-        //    .attr("class", "title")
     })
     .on("mouseout", function(d)
     {
@@ -281,66 +314,20 @@ function updateChart(){
             .exit()
             .remove();
 
-        arc
-          .exit()
+        d3.selectAll("polyline")
+            .remove();
+
+        d3.selectAll(".labelText")
+            .remove();
+
+        arc.exit()
           .remove()
-    });
-
-    /*
-        var rects = g.selectAll(".bar")
-                .data(newHit)            
-                .on("mouseover", function(d)
-                {
-                    d3.select(this)
-                        .transition()
-                        .duration("50")
-                        .attr("opacity", "0.3");
-                })
-                .on("mouseout", function(d)
-                {
-                    d3.select(this)
-                    .transition()
-                    .duration("50")
-                    .attr("opacity", "1");
-                });
-
-                
-    rects.enter()
-        .data(newHit)  
-        .append("rect")
-        .attr("class", "bar")
-        .attr("x", function(d) { return xScale(d.key) - 30; })
-        .attr("width", xScale.bandwidth())
-        .attr("y", function(d) { return yScale(d.value); })
-        .attr("width", width/10)
-        .attr("height", function(d) { return height - yScale(d.value); });
-
-    
-    */
-    /*
-    var xScale = d3.scaleBand().range([0, width]);
-    var yScale = d3.scaleLinear().range([height, 0]);
-
-    var resizeY = Math.max(...Hit) + 1;
-    y.domain([0, resizeY]);
-    xScale.domain(Hit);
-    yScale.domain([0, resizeY - 1]);
-
-    yAxisGroup.transition().duration(1000)
-    .call(d3.axisLeft(y));
-    
-    g.selectAll(".bar").remove();
-
-    g.selectAll(".bar")
-    .data(Hit)
-    .enter().append("rect")
-    .attr("class", "bar")
-    .attr("x", function(d) { return xScale(d); })
-    .attr("y", function(d) { return yScale(d); })
-    .attr("width", 50)
-    .attr("height", function(d) { return height - yScale(d); });
-*/
-   // console.log(Hit);
-
+    })
+    //.transition()
+    //.duration(1000)
+    .attr("y", function(d) { return yScale(d.value); })
+    .attr("width", width/10)
+    .attr("height", function(d) { return height - yScale(d.value); })
+    .attr("fill", function(d) { return ordScale(d.value); });
 }
 
