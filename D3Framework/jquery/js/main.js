@@ -6,7 +6,18 @@
  */
 var Num = 4;
 var Hit = [];
-var Ratio0 = new Map([]);
+
+var Ratio0 = d3.map();
+var Ratio1 = d3.map();
+var Ratio2 = d3.map();
+var Ratio3 = d3.map();
+var Ratio4 = d3.map();
+var Ratio5 = d3.map();
+var Ratio6 = d3.map();
+var Ratio7 = d3.map();
+var Ratio8 = d3.map();
+var Ratio9 = d3.map();
+
 var arrayNum = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
 var margin = { left:80, right:100, top:50, bottom:100 };
@@ -68,9 +79,46 @@ function calculateHitCountByNum(d){
                 {
                     //console.log(Limit);   
                     a += +d.HitCount;
+                    //console.log(d["Time/Hit"]);
                     if(i == 0)
                     {
-                        Ratio0.set(d["Function"] ,d["Time/Hit"]);
+                        Ratio0.set(d["Function"], d["Time/Hit"]);
+                    }
+                    else if(i == 1)
+                    {
+                        Ratio1.set(d["Function"], d["Time/Hit"]);
+                    }
+                    else if(i == 2)
+                    {
+                        Ratio2.set(d["Function"], d["Time/Hit"]);
+                    }
+                    else if(i == 3)
+                    {
+                        Ratio3.set(d["Function"], d["Time/Hit"]);
+                    }
+                    else if(i == 4)
+                    {
+                        Ratio4.set(d["Function"], d["Time/Hit"]);
+                    }
+                    else if(i == 5)
+                    {
+                        Ratio5.set(d["Function"], d["Time/Hit"]);
+                    }
+                    else if(i == 6)
+                    {
+                        Ratio6.set(d["Function"], d["Time/Hit"]);
+                    }
+                    else if(i == 7)
+                    {
+                        Ratio7.set(d["Function"], d["Time/Hit"]);
+                    }
+                    else if(i == 8)
+                    {
+                        Ratio8.set(d["Function"], d["Time/Hit"]);
+                    }
+                    else if(i == 9)
+                    {
+                        Ratio9.set(d["Function"], d["Time/Hit"]);
                     }
                     Limit += 1;
                 }
@@ -80,7 +128,7 @@ function calculateHitCountByNum(d){
         });
         Hit.push(a);
     }
-    console.log(Ratio0.get(0));
+    console.log(Ratio1);
 }
 
 function updateChart(){
