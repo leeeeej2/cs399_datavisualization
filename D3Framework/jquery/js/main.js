@@ -29,7 +29,7 @@ var svg = d3.select("#chart-area")
     .append("svg")
     .attr("radius", radius)
     .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
+    .attr("height", height + 1500 + margin.top + margin.bottom)
     
 var g = svg.append("g")
         .attr("transform", "translate(" + margin.left + 
@@ -202,7 +202,7 @@ function updateChart(){
         arc.append("path")
          .attr("d", path)
          .attr("fill", function(d) { return ordScale(d.data.value); })
-         .attr("transform", "translate(" + (width / 2 - 120) + "," + 20 + ")");
+         .attr("transform", "translate(" + (width / 2 - 50) + "," + height * 1.7 + ")");
 
         var label = d3.arc()
             .outerRadius(radius)
