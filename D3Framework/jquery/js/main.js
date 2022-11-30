@@ -179,9 +179,6 @@ function updateChart(){
         div.transition()
             .duration("50")
             .attr("opacity", "1");
-
-        g.selectAll("arc").remove();
-
         
         //draw pop up pie chart
         var pie = d3.pie().value(function(d) { 
@@ -190,10 +187,44 @@ function updateChart(){
 
         var d_ = pie(d3.entries(Ratio0))
 
+        switch(d.key) {
+            case 0:
+                d_ = pie(d3.entries(Ratio0))
+                break;
+            case 1:
+                d_ = pie(d3.entries(Ratio1))
+                break;
+            case 2:
+                d_ = pie(d3.entries(Ratio2))
+                break;
+            case 3:
+                d_ = pie(d3.entries(Ratio3))
+                break;
+            case 4:
+                d_ = pie(d3.entries(Ratio4))
+                break;
+            case 5:
+                d_ = pie(d3.entries(Ratio5))
+                break;
+            case 6:
+                d_ = pie(d3.entries(Ratio6))
+                break;
+            case 7:
+                d_ = pie(d3.entries(Ratio7))
+                break;
+            case 8:
+                d_ = pie(d3.entries(Ratio8))
+                break;
+            case 9:
+                d_ = pie(d3.entries(Ratio9))
+                break;
+            default:
+                // code block
+            }
+
         var arc = g.selectAll("arc")
                    .data(pie(d_))
                    .enter();
-
         
         var path = d3.arc()
                    .outerRadius(radius)
@@ -245,6 +276,14 @@ function updateChart(){
         
         d3.selectAll("path")
             .remove();
+
+        d3.selectAll("arc")
+            .exit()
+            .remove();
+
+        arc
+          .exit()
+          .remove()
     });
 
     /*
