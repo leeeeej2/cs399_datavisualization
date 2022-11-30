@@ -155,8 +155,9 @@ function updateChart(){
     
     var ordScale = d3.scaleOrdinal()
     .domain(newHit)
-    .range(['#ffd384','#94ebcd','#fbaccc','#d3e0ea','#fa7f72']);
-
+    .range(['#ffd384','#94ebcd','#fbaccc','#d3e0ea','#fa7f72'])
+    .range(d3.schemeDark2);
+    
     g.selectAll(".bar").remove(); 
 
     g.selectAll(".bar")
@@ -232,7 +233,7 @@ function updateChart(){
 
         var outerArc = d3.arc()
                 .innerRadius(radius * 0.9)
-                .outerRadius(radius * 0.9)
+                .outerRadius(radius * 0.9);
 
         arc.append("path")
          .attr("d", path)
@@ -276,14 +277,16 @@ function updateChart(){
             .attr("class", "labelText")
             .text( function(d) { console.log(d.data.key) ; return d.data.key } )
             .attr('transform', function(d) {
-                  var pos = outerArc.centroid(d);
+                  var pos2 = outerArc.centroid(d);
+                  //console.log(pos);
                   var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
-                  pos[0] = radius * 0.99 * (midangle < Math.PI ? 1 : -1);
-                  return "translate(" + (width / 2 - 50) + pos + "," +  height * 1.7 + ")";
-              })
+                  pos2[0] = radius * 0.99 * (midangle < 3.14 ? 1 : -1) + (width / 2 - 50);
+                  pos2[1] += height * 1.7;
+                  return 'translate(' + pos2 + ')';
+                })
             .style('text-anchor', function(d) {
                   var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
-                  return (midangle < Math.PI ? 'start' : 'end')
+                  return (midangle < 3.14 ? 'start' : 'end')
               });
         /////////////////////
         
