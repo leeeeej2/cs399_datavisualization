@@ -70,6 +70,20 @@ $("#numFuncsFromGUI").on("change",  function(d){
 
 function calculateHitCountByNum(d){
     Hit = [];
+    Ratio0.clear();
+    Ratio1.clear();
+    Ratio2.clear();
+    Ratio3.clear();
+    Ratio4.clear();
+    Ratio5.clear();
+    Ratio6.clear();
+    Ratio7.clear();
+    Ratio8.clear();
+    Ratio9.clear();
+
+    console.log("ratio0 is: ");
+    console.log(Ratio0);
+
     for(var i = 0; i < arrayNum.length; i++)
     {
         var a = 0;
