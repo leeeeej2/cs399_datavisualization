@@ -147,6 +147,16 @@ function calculateHitCountByNum(d){
     //console.log(Ratio1);
 }
 
+function resize(obj) {
+    console.log(112);
+    for(var i = obj.size() - 1; i > Num; --i)
+    {
+        console.log(i);
+        var key = Object.keys(obj).pop();
+        delete obj[key];
+    }
+}
+
 function updateChart(){
     //var uniqueValues = d3.map([])
     var newHit = Hit.map(function(val, index){return {key:index, value:val};})
@@ -266,24 +276,7 @@ function updateChart(){
             .style("font-family", "arial")
             .style("font-size", 15);
 
-        g.selectAll('allPolylines')
-            .data(d_)
-            .enter()
-            .append('polyline')
-            .attr("stroke", "black")
-            .style("fill", "none")
-            .attr("stroke-width", 1)
-            .attr('points', function(d) {
-                var posA = path.centroid(d) 
-                var posB = outerArc.centroid(d) 
-                var posC = outerArc.centroid(d); 
-                var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2 
-                posC[0] = radius * 0.95 * (midangle < 3.14 ? 1 : -1); 
-                return [posA, posB, posC]
-            })
-            .attr("transform", "translate(" + (width / 2 - 50) + "," + height * 1.7 + ")");
-            
-            console.log(d_);
+        //console.log((Ratio0));
 
         g.selectAll('allLabels')
             .data(d_)
@@ -303,6 +296,28 @@ function updateChart(){
                   var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
                   return (midangle < 3.14 ? 'start' : 'end')
               });
+        //console.log(d_);
+
+        //d_.resize();
+        g.selectAll('allPolylines')
+            .data(d_)
+            .enter()
+            .append('polyline')
+            .attr("stroke", "black")
+            .style("fill", "none")
+            .attr("stroke-width", 1)
+            .attr('points', function(d) {
+                if(d.value === d.value)
+                {
+                var posA = path.centroid(d) 
+                var posB = outerArc.centroid(d) 
+                var posC = outerArc.centroid(d); 
+                var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2 
+                posC[0] = radius * 0.95 * (midangle < 3.14 ? 1 : -1); 
+                return [posA, posB, posC];
+                }
+            })
+            .attr("transform", "translate(" + (width / 2 - 50) + "," + height * 1.7 + ")");
         /////////////////////
         
         g.append("text")
@@ -341,8 +356,6 @@ function updateChart(){
         arc.exit()
           .remove()
     })
-    //.transition()
-    //.duration(1000)
     .attr("y", function(d) { return yScale(d.value); })
     .attr("width", width/10)
     .attr("height", function(d) { return height - yScale(d.value); })
