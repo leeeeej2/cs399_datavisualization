@@ -81,8 +81,8 @@ function calculateHitCountByNum(d){
     Ratio8.clear();
     Ratio9.clear();
 
-    console.log("ratio0 is: ");
-    console.log(Ratio0);
+    //console.log("ratio0 is: ");
+    //console.log(Ratio0);
 
     for(var i = 0; i < arrayNum.length; i++)
     {
@@ -283,13 +283,14 @@ function updateChart(){
             })
             .attr("transform", "translate(" + (width / 2 - 50) + "," + height * 1.7 + ")");
             
+            console.log(d_);
 
         g.selectAll('allLabels')
             .data(d_)
             .enter()
             .append('text')
             .attr("class", "labelText")
-            .text( function(d) { console.log(d.data.key) ; return d.data.key } )
+            .text( function(d) { if(d.value === d.value) {console.log(d.data.key) ; return d.data.key }} )
             .attr('transform', function(d) {
                   var pos2 = outerArc.centroid(d);
                   //console.log(pos);
