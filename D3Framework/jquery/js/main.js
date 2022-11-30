@@ -6,6 +6,7 @@
  */
 var Num = 4;
 var Hit = [];
+var Ratio0 = new Map([]);
 var arrayNum = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
 var margin = { left:80, right:100, top:50, bottom:100 };
@@ -67,6 +68,10 @@ function calculateHitCountByNum(d){
                 {
                     //console.log(Limit);   
                     a += +d.HitCount;
+                    if(i == 0)
+                    {
+                        Ratio0.set(d["Function"] ,d["Time/Hit"]);
+                    }
                     Limit += 1;
                 }
                 d.Hits = +Hit[i];
@@ -75,7 +80,7 @@ function calculateHitCountByNum(d){
         });
         Hit.push(a);
     }
-
+    console.log(Ratio0.get(0));
 }
 
 function updateChart(){
