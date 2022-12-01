@@ -73,18 +73,20 @@ void Profiler::Exit() {
 	{
 		for(const auto& v : SampleVector)
 		{
-            std::map<float, std::pair<const unsigned long long, SampleInfo>, std::greater<>> m;
+            std::map<double, std::pair<const unsigned long long, SampleInfo>, std::greater<>> m;
 			for(const auto& data : v)
 			{
-                float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-                m.insert(std::make_pair((float)data.second.HitCount_ + r, data));
+                unsigned hitCount = data.second.HitCount_;
+                double timeDuration = data.second.TimeDuration_;
+                //float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+                m.insert(std::make_pair(timeDuration / hitCount, data));
 			}
             for(const auto& data : m)
             {
                 std::string name = data.second.second.SymbolName_;
                 unsigned hitCount = data.second.second.HitCount_;
                 double timeDuration = data.second.second.TimeDuration_;
-                if (name.empty())
+                if (name.empty() || name.find(':') == std::string::npos)
                     continue;
                 logFile << time_interval << ",";
                 std::string::iterator end_pos = std::remove(name.begin(), name.end(), ',');
