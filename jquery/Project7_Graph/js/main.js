@@ -307,13 +307,17 @@ function updateChart(){
             .enter()
             .append("circle")
             .attr("cx", function(d) {
-                if(d.index < Num) 
+                if(d.value === d.value) 
                 {
                     return width / 2 + 100;
                 }
+                else
+                {
+                    return -3000;
+                }
             } )
             .attr("cy", function(d,i){ 
-                if(d.index < Num)
+                if(d.value === d.value)
                 {
                     return height * 1.39 + i * (30);
                 } })
