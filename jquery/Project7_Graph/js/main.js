@@ -292,6 +292,7 @@ function updateChart(){
                 .endAngle(function(d) {return d.endAngle - Math.PI/2;})
 
         arc.append("path")
+        .attr("class", "pies")
          .attr("d", path)
          .attr("fill", function(d) { return ordScale(d.data.value); })
          .attr("transform", "translate(" + (width / 2 - 50) + "," + height * 1.7 + ")");
@@ -374,9 +375,9 @@ function updateChart(){
 
         d3.selectAll(".value")
             .remove();
-        
-        d3.selectAll("path")
-            .remove();
+
+        d3.selectAll(".pies")
+            .remove();    
 
         d3.selectAll("arc")
             .exit()
