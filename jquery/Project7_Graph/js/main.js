@@ -56,6 +56,13 @@ var yAxisGroup = svg.append("g")
     .attr("transform", "translate(50, 50)")
     .call(d3.axisLeft(y));
 
+svg.append("text")
+    .attr("text-anchor", "end")
+    .attr("transform", "rotate(-90)")
+    .attr("y", margin.left - 70)
+    .attr("x", margin.top - 250)
+    .text("HitCount")
+
 var Options =  // add the options to the button
 d3.select("#selectButton")
   .selectAll('myOptions')
