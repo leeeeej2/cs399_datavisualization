@@ -12,7 +12,7 @@ function changeBackground(color) {
     document.body.style.background = color;
  }
 
- window.addEventListener("load",function() { changeBackground('white') });
+ window.addEventListener("load",function() { changeBackground('#ebebeb') });
 
 var Ratio0 = d3.map();
 var Ratio1 = d3.map();
