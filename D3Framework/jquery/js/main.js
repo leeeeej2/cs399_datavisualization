@@ -64,7 +64,7 @@ d3.select("#selectButton")
   .text(function (d) { return d; }) // text showed in the menu
   .attr("value", function (d) { return d; }) 
 
-d3.csv("data/ProfileReport.csv").then(function(data){
+d3.csv(fileName).then(function(data){
     calculateHitCountByNum(data);
     updateChart();
 });
@@ -73,12 +73,19 @@ var Num = $("#numFuncsFromGUI").val();
 $("#numFuncsFromGUI").on("change",  function(d){
     Num = this.value;
     //console.log(Num);
-    d3.csv("data/ProfileReport.csv").then(function(data){
+    d3.csv(fileName).then(function(data){
 
         calculateHitCountByNum(data);
         updateChart();
     });
 });
+
+function loadData(fileName){
+    d3.csv(fileName).then(function(data){
+        calculateHitCountByNum(data);
+        updateChart();
+    });
+}
 
 var dropdown = d3.select("#vis-container")
                     .insert("select", "svg")
@@ -96,9 +103,6 @@ function calculateHitCountByNum(d){
     Ratio7.clear();
     Ratio8.clear();
     Ratio9.clear();
-
-    //console.log("ratio0 is: ");
-    //console.log(Ratio0);
 
     for(var i = 0; i < arrayNum.length; i++)
     {
@@ -175,8 +179,6 @@ function resize(obj) {
 
 function updateChart(){
     d3.selectAll("myOptions").remove(); 
-
-   
     
     var newHit = Hit.map(function(val, index){return {key:index, value:val};})
     //console.log(newHit);
@@ -387,5 +389,19 @@ function updateChart(){
     .attr("width", width/10)
     .attr("height", function(d) { return height - yScale(d.value); })
     .attr('fill', (d) => colorScale(yScale(d.value)));
-    //.attr("fill", function(d) { return ordScale(d.value); });
+
+    d3.select("#selectButton").on("change", function(d){
+        selectedGroup = this.value;
+        console.log(selectedGroup);
+
+        if(selectedGroup == "withoutAPI")
+        {
+            fileName = "data/ProfileReport.csv";
+        }
+        else
+        {
+            fileName = "data/ProfileReportWithAPI.csv";
+        }
+        loadData(fileName);
+      })
 }
