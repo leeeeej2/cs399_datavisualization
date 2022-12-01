@@ -165,7 +165,6 @@ function calculateHitCountByNum(d){
         });
         Hit.push(a);
     }
-    //console.log(Ratio1);
 }
 
 function resize(obj) {
@@ -182,7 +181,6 @@ function updateChart(){
     d3.selectAll("myOptions").remove(); 
     
     var newHit = Hit.map(function(val, index){return {key:index, value:val};})
-    //console.log(newHit);
 
     var xScale = d3.scaleBand().range([0, width]);
     var yScale = d3.scaleLinear().range([height, 0]);
@@ -206,9 +204,6 @@ function updateChart(){
     .range(['#ffd384','#94ebcd','#fbaccc','#d3e0ea','#fa7f72'])
     .range(d3.schemeSet3);
     
-    var colorScale = d3.scaleOrdinal()
-    .range(colorbrewer.Reds[10]);
-
     g.selectAll(".bar").remove(); 
 
     g.selectAll(".bar")
@@ -285,21 +280,11 @@ function updateChart(){
                     .padRadius(100)
                     .cornerRadius(2);
 
-        var outerArc = d3.arc()
-                .innerRadius(radius * 0.9)
-                .outerRadius(radius * 0.9)
-                .startAngle(function(d){ return d.startAngle - Math.PI/2;})
-                .endAngle(function(d) {return d.endAngle - Math.PI/2;})
-
         arc.append("path")
         .attr("class", "pies")
          .attr("d", path)
          .attr("fill", function(d) { return ordScale(d.data.value); })
          .attr("transform", "translate(" + (width / 2 - 50) + "," + height * 1.7 + ")");
-
-        var label = d3.arc()
-            .outerRadius(radius)
-            .innerRadius(0);
 
         g.selectAll('allLabels')
             .data(d_)
@@ -312,7 +297,8 @@ function updateChart(){
                 }} )
             .attr("x", width / 2 + 110)
             .attr("y", function(d, i){return height * 1.4 + i * (30);} )
-            .style('fill', function(d){ return ordScale(d.data.value);})
+            .attr("font-weight", 550)
+            .style('fill', 'black')
             .style('text-anchor', 'left');
         //console.log(d_);
 
@@ -321,42 +307,20 @@ function updateChart(){
             .enter()
             .append("circle")
             .attr("cx", function(d) {
-                if(d.value === d.value) 
+                if(d.index < Num) 
                 {
                     return width / 2 + 100;
                 }
             } )
             .attr("cy", function(d,i){ 
-                if(d.value === d.value)
+                if(d.index < Num)
                 {
                     return height * 1.39 + i * (30);
                 } })
             .attr("r", 7)
             .style("fill", function(d){ return ordScale(d.data.value)})
 
-
-        //d_.resize();
-        // g.selectAll('allPolylines')
-        //     .data(d_)
-        //     .enter()
-        //     .append('polyline')
-        //     .attr("stroke", "black")
-        //     .style("fill", "none")
-        //     .attr("stroke-width", 1)
-        //     .attr('points', function(d) {
-        //         if(d.value === d.value)
-        //         {
-        //         var posA = path.centroid(d) 
-        //         var posB = outerArc.centroid(d) 
-        //         var posC = outerArc.centroid(d); 
-        //         var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2 
-        //         posC[0] = radius * 0.95 * (midangle < Math.PI ? 1 : -1); 
-        //         return [posA, posB, posC];
-        //         }
-        //     })
-        //     .attr("transform", "translate(" + (width / 2 - 50) + "," + height * 1.7 + ")");
         /////////////////////
-        
         g.append("text")
                 .attr("class", "value")
                 .attr("x", function(){return xScale(d.key);})
