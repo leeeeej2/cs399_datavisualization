@@ -71,8 +71,8 @@ svg.append("text")
 
 svg.append("text")
     .attr("text-anchor", "end")
-    .attr("x", width / 2 + 100)
-    .attr("y", height + margin.top + 50)
+    .attr("x", width / 2 + 90)
+    .attr("y", height + margin.top + 40)
     .text("Time Interval");
 
 var Options =  // add the options to the button
