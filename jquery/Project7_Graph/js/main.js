@@ -191,7 +191,7 @@ function updateChart(){
     var resizeY = d3.max(newHit, function(d){return Math.max(d.value);});
     y.domain([0, resizeY]);
 
-    xScale.domain(newHit.map(function(d){return d.key}));
+    xScale.domain(newHit.map(function(d){return d.key}))
     yScale.domain([0, resizeY - 1]);
     
     yAxisGroup.transition().duration(1000)
@@ -213,11 +213,12 @@ function updateChart(){
 
     g.selectAll(".bar")
     .data(newHit)
-    .enter().append("rect")
+    .enter()
+    .append("rect")
     .attr("class", "bar")
-    .attr("x", function(d) { return xScale(d.key) - 30; })
-    //.attr("y", function(d) { return height; })
+    .attr("x", function(d) { return xScale(d.key) - 29; })
     .attr("width", xScale.bandwidth())
+    .attr("style", "outline: thin solid black;")
     .on("mouseover", function(d)
     {
         d3.select(this)
@@ -393,7 +394,8 @@ function updateChart(){
     .attr("y", function(d) { return yScale(d.value); })
     .attr("width", width/10)
     .attr("height", function(d) { return height - yScale(d.value); })
-    .attr('fill', (d) => colorScale(yScale(d.value)));
+    .attr("fill", 'steelblue');
+    //.attr('fill', (d) => colorScale(yScale(d.value)));
 
     d3.select("#selectButton").on("change", function(d){
         selectedGroup = this.value;
