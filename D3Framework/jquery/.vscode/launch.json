@@ -3,12 +3,20 @@
     // Hover to view descriptions of existing attributes.
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
+    "console": "integratedTerminal",
     "configurations": [
         {
-            "type": "pwa-chrome",
+            "type": "chrome",
             "request": "launch",
-            "name": "Launch Chrome against localhost",
-            "file": "${workspaceFolder}/index.html"
-        }
+            "name": "Bar",
+            "url": "http://localhost:8000//${workspaceFolder}/index.html",
+            "webRoot": "${workspaceFolder}"
+        },
+        //{
+        //    "type": "pwa-chrome",
+        //    "request": "launch",
+        //    "name": "Launch Chrome against localhost",
+        //    "file": "${workspaceFolder}/index.html"
+        //},
     ]
 }
