@@ -8,6 +8,12 @@
 var Num = 4;
 var Hit = [];
 
+function changeBackground(color) {
+    document.body.style.background = color;
+ }
+
+ window.addEventListener("load",function() { changeBackground('white') });
+
 var Ratio0 = d3.map();
 var Ratio1 = d3.map();
 var Ratio2 = d3.map();
@@ -225,6 +231,7 @@ function updateChart(){
     .append("rect")
     .attr("class", "bar")
     .attr("x", function(d) { return xScale(d.key) - 29; })
+    //.attr("y", function(d) { return height; })
     .attr("width", xScale.bandwidth())
     .attr("style", "outline: thin solid black;")
     .on("mouseover", function(d)
@@ -374,11 +381,12 @@ function updateChart(){
         arc.exit()
           .remove()
     })
+    //.transition()
+    //.duration(1000)
     .attr("y", function(d) { return yScale(d.value); })
     .attr("width", width/10)
     .attr("height", function(d) { return height - yScale(d.value); })
     .attr("fill", "#9ac7e1");
-    //.attr('fill', (d) => colorScale(yScale(d.value)));
 
     d3.select("#selectButton").on("change", function(d){
         selectedGroup = this.value;
