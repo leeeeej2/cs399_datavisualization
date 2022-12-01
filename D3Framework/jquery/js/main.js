@@ -98,43 +98,43 @@ function calculateHitCountByNum(d){
                     //console.log(d["Time/Hit"]);
                     if(i == 0)
                     {
-                        Ratio0.set(d["Function"], d["Time/Hit"]);
+                        Ratio0.set(d["Function"], d["Time(ms)"]);
                     }
                     else if(i == 1)
                     {
-                        Ratio1.set(d["Function"], d["Time/Hit"]);
+                        Ratio1.set(d["Function"], d["Time(ms)"]);
                     }
                     else if(i == 2)
                     {
-                        Ratio2.set(d["Function"], d["Time/Hit"]);
+                        Ratio2.set(d["Function"], d["Time(ms)"]);
                     }
                     else if(i == 3)
                     {
-                        Ratio3.set(d["Function"], d["Time/Hit"]);
+                        Ratio3.set(d["Function"], d["Time(ms)"]);
                     }
                     else if(i == 4)
                     {
-                        Ratio4.set(d["Function"], d["Time/Hit"]);
+                        Ratio4.set(d["Function"], d["Time(ms)"]);
                     }
                     else if(i == 5)
                     {
-                        Ratio5.set(d["Function"], d["Time/Hit"]);
+                        Ratio5.set(d["Function"], d["Time(ms)"]);
                     }
                     else if(i == 6)
                     {
-                        Ratio6.set(d["Function"], d["Time/Hit"]);
+                        Ratio6.set(d["Function"], d["Time(ms)"]);
                     }
                     else if(i == 7)
                     {
-                        Ratio7.set(d["Function"], d["Time/Hit"]);
+                        Ratio7.set(d["Function"], d["Time(ms)"]);
                     }
                     else if(i == 8)
                     {
-                        Ratio8.set(d["Function"], d["Time/Hit"]);
+                        Ratio8.set(d["Function"], d["Time(ms)"]);
                     }
                     else if(i == 9)
                     {
-                        Ratio9.set(d["Function"], d["Time/Hit"]);
+                        Ratio9.set(d["Function"], d["Time(ms)"]);
                     }
                     Limit += 1;
                 }
@@ -283,7 +283,10 @@ function updateChart(){
             .enter()
             .append('text')
             .attr("class", "labelText")
-            .text( function(d) { if(d.value === d.value) {console.log(d.data.key) ; return d.data.key }} )
+            .text( function(d) { 
+                if(d.value === d.value) {
+                    console.log(d.data.key) ; return d.data.key + " / " + d.data.value + "(ms)"
+                }} )
             .attr('transform', function(d) {
                   var pos2 = outerArc.centroid(d);
                   //console.log(pos);

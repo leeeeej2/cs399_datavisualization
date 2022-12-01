@@ -13,7 +13,7 @@
 
 #pragma comment( lib, "dbghelp" )
 
-#define MAXSAMPLENUM 10000
+#define MAXSAMPLENUM 200000
 
 HANDLE Profiler::MainThread_;
 DWORD Profiler::MainThreadId_;
@@ -65,7 +65,7 @@ void Profiler::Exit() {
 
     std::ofstream logFile("ProfileReport.csv");
 
-    logFile << "TimeInterval,Function,HitCount,Time(ms),Time/Hit\n";
+    logFile << "TimeInterval,Function,HitCount,Percentage,Time(ms),Time/Hit\n";
 
     const size_t s = SampleVector.size();
     int time_interval = 0;
@@ -73,13 +73,12 @@ void Profiler::Exit() {
 	{
 		for(const auto& v : SampleVector)
 		{
-            std::map<double, std::pair<const unsigned long long, SampleInfo>, std::greater<>> m;
+            std::map<float, std::pair<const unsigned long long, SampleInfo>, std::greater<>> m;
 			for(const auto& data : v)
 			{
                 unsigned hitCount = data.second.HitCount_;
-                double timeDuration = data.second.TimeDuration_;
-                //float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-                m.insert(std::make_pair(timeDuration / hitCount, data));
+                float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+                m.insert(std::make_pair((float)hitCount + r, data));
 			}
             for(const auto& data : m)
             {
@@ -93,6 +92,7 @@ void Profiler::Exit() {
                 name.erase(end_pos, name.end());
                 logFile << name << ",";
                 logFile << hitCount << ",";
+                logFile << (double)hitCount / (double)MAXSAMPLENUM * 100.0 << ",";
                 logFile << timeDuration << ",";
                 logFile << timeDuration / (double)hitCount << '\n';
             }
