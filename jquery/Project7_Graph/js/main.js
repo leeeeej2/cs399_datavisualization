@@ -300,16 +300,6 @@ function updateChart(){
             .outerRadius(radius)
             .innerRadius(0);
 
-        arc.append("text")
-            .attr("transform", function(d) { 
-            return "translate(" + label.centroid(d) + ")"; 
-            })
-            .text(function(d) { return d.data.key; })
-            .style("font-family", "arial")
-            .style("font-size", 15);
-
-        //console.log((Ratio0));
-
         g.selectAll('allLabels')
             .data(d_)
             .enter()
@@ -317,42 +307,53 @@ function updateChart(){
             .attr("class", "labelText")
             .text( function(d) { 
                 if(d.value === d.value) {
-                    console.log(d.data.key) ; return d.data.key + " / " + d.data.value + "(ms)"
+                    return d.data.key + " / " + d.data.value + "(ms)"
                 }} )
-            .attr('transform', function(d) {
-                  var pos2 = outerArc.centroid(d);
-                  //console.log(pos);
-                  var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
-                  pos2[0] = radius * 0.95 * (midangle < Math.PI ? 1 : -1) + (width / 2 - 50);
-                  pos2[1] += height * 1.7;
-                  return 'translate(' + pos2 + ')';
-                })
-            .style('text-anchor', function(d) {
-                  var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
-                  return (midangle < Math.PI ? 'start' : 'end')
-              });
+            .attr("x", width / 2 + 110)
+            .attr("y", function(d, i){return height * 1.4 + i * (30);} )
+            .style('fill', function(d){ return ordScale(d.data.value);})
+            .style('text-anchor', 'left');
         //console.log(d_);
 
-        //d_.resize();
-        g.selectAll('allPolylines')
+        g.selectAll("mydots")
             .data(d_)
             .enter()
-            .append('polyline')
-            .attr("stroke", "black")
-            .style("fill", "none")
-            .attr("stroke-width", 1)
-            .attr('points', function(d) {
+            .append("circle")
+            .attr("cx", function(d) {
+                if(d.value === d.value) 
+                {
+                    return width / 2 + 100;
+                }
+            } )
+            .attr("cy", function(d,i){ 
                 if(d.value === d.value)
                 {
-                var posA = path.centroid(d) 
-                var posB = outerArc.centroid(d) 
-                var posC = outerArc.centroid(d); 
-                var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2 
-                posC[0] = radius * 0.95 * (midangle < Math.PI ? 1 : -1); 
-                return [posA, posB, posC];
-                }
-            })
-            .attr("transform", "translate(" + (width / 2 - 50) + "," + height * 1.7 + ")");
+                    return height * 1.39 + i * (30);
+                } })
+            .attr("r", 7)
+            .style("fill", function(d){ return ordScale(d.data.value)})
+
+
+        //d_.resize();
+        // g.selectAll('allPolylines')
+        //     .data(d_)
+        //     .enter()
+        //     .append('polyline')
+        //     .attr("stroke", "black")
+        //     .style("fill", "none")
+        //     .attr("stroke-width", 1)
+        //     .attr('points', function(d) {
+        //         if(d.value === d.value)
+        //         {
+        //         var posA = path.centroid(d) 
+        //         var posB = outerArc.centroid(d) 
+        //         var posC = outerArc.centroid(d); 
+        //         var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2 
+        //         posC[0] = radius * 0.95 * (midangle < Math.PI ? 1 : -1); 
+        //         return [posA, posB, posC];
+        //         }
+        //     })
+        //     .attr("transform", "translate(" + (width / 2 - 50) + "," + height * 1.7 + ")");
         /////////////////////
         
         g.append("text")
@@ -382,7 +383,7 @@ function updateChart(){
             .exit()
             .remove();
 
-        d3.selectAll("polyline")
+        d3.selectAll("circle")
             .remove();
 
         d3.selectAll(".labelText")
