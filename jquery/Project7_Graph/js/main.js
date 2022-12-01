@@ -63,6 +63,12 @@ svg.append("text")
     .attr("x", margin.top - 250)
     .text("HitCount")
 
+svg.append("text")
+    .attr("text-anchor", "end")
+    .attr("x", width / 2 + 100)
+    .attr("y", height + margin.top + 50)
+    .text("Time Interval");
+
 var Options =  // add the options to the button
 d3.select("#selectButton")
   .selectAll('myOptions')
