@@ -19,11 +19,14 @@ var Ratio8 = d3.map();
 var Ratio9 = d3.map();
 
 var arrayNum = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+var allGroup = ["withoutAPI", "withAPI"]
 
 var margin = { left:80, right:100, top:50, bottom:100 };
 var height = 500 - margin.top - margin.bottom;
 var width = 900 - margin.left - margin.right;
 var radius = Math.min(width, height) / 2;
+
+var fileName = "data/ProfileReport.csv";
 
 var svg = d3.select("#chart-area")
     .append("svg")
@@ -67,6 +70,10 @@ $("#numFuncsFromGUI").on("change",  function(d){
         updateChart();
     });
 });
+
+var dropdown = d3.select("#vis-container")
+                    .insert("select", "svg")
+                    .on("change", dropdownChange);
 
 function calculateHitCountByNum(d){
     Hit = [];
@@ -158,7 +165,17 @@ function resize(obj) {
 }
 
 function updateChart(){
-    //var uniqueValues = d3.map([])
+    d3.selectAll("myOptions").remove(); 
+
+    // add the options to the button
+    d3.select("#selectButton")
+      .selectAll('myOptions')
+     	.data(allGroup)
+      .enter()
+    	.append('option')
+      .text(function (d) { return d; }) // text showed in the menu
+      .attr("value", function (d) { return d; }) 
+    
     var newHit = Hit.map(function(val, index){return {key:index, value:val};})
     //console.log(newHit);
 
@@ -370,4 +387,3 @@ function updateChart(){
     .attr('fill', (d) => colorScale(yScale(d.value)));
     //.attr("fill", function(d) { return ordScale(d.value); });
 }
-

@@ -29,6 +29,7 @@
                     <input id="numFuncsFromGUILabel" type="text" size="5"/>
                     <input type="range" class="form-control-range" name="numFuncsFromGUI" id="numFuncsFromGUI" min="4" max="10" value="4" onmousemove="printValue('numFuncsFromGUI','numFuncsFromGUILabel')">
                 </div>
+                <select id="selectButton"></select>
             </div>
             <div class="row">
                 <div id="chart-area"></div>  
@@ -51,8 +52,6 @@
         }
         window.onload = function() {
             printValue('numFuncsFromGUI','numFuncsFromGUILabel');
-
-            updateChart();
         }
     </script>
     </body>
