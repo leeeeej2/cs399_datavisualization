@@ -203,7 +203,7 @@ function updateChart(){
     
     var ordScale = d3.scaleOrdinal()
     .domain(newHit)
-    //.range(['#ffd384','#94ebcd','#fbaccc','#d3e0ea','#fa7f72'])
+    .range(['#ffd384','#94ebcd','#fbaccc','#d3e0ea','#fa7f72'])
     .range(d3.schemeSet3);
     
     var colorScale = d3.scaleOrdinal()
@@ -358,8 +358,8 @@ function updateChart(){
         
         g.append("text")
                 .attr("class", "value")
-                .attr("x", function(){return xScale(d.key) - 30;})
-                .attr("y", function(){return yScale(d.value);})
+                .attr("x", function(){return xScale(d.key);})
+                .attr("y", function(){return yScale(d.value) - 10;})
                 .text(function(){return d.value});
     })
     .on("mouseout", function(d)
