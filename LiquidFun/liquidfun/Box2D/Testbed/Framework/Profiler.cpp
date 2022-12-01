@@ -64,8 +64,10 @@ void Profiler::Start() {
 void Profiler::Exit() {
 
     std::ofstream logFile("ProfileReport.csv");
+    std::ofstream apiLog("ProfileReportWithApi.csv");
 
     logFile << "TimeInterval,Function,HitCount,Percentage,Time(ms),Time/Hit\n";
+    apiLog << "TimeInterval,Function,HitCount,Percentage,Time(ms),Time/Hit\n";
 
     const size_t s = SampleVector.size();
     int time_interval = 0;
@@ -96,12 +98,29 @@ void Profiler::Exit() {
                 logFile << timeDuration << ",";
                 logFile << timeDuration / (double)hitCount << '\n';
             }
+            for (const auto& data : m)
+            {
+                std::string name = data.second.second.SymbolName_;
+                unsigned hitCount = data.second.second.HitCount_;
+                double timeDuration = data.second.second.TimeDuration_;
+                if (name.empty())
+                    continue;
+                apiLog << time_interval << ",";
+                std::string::iterator end_pos = std::remove(name.begin(), name.end(), ',');
+                name.erase(end_pos, name.end());
+                apiLog << name << ",";
+                apiLog << hitCount << ",";
+                apiLog << (double)hitCount / (double)MAXSAMPLENUM * 100.0 << ",";
+                apiLog << timeDuration << ",";
+                apiLog << timeDuration / (double)hitCount << '\n';
+            }
             m.clear();
             ++time_interval;
 		}
 	}
 
     logFile.close();
+    apiLog.close();
 }
 
 void Profiler::Sample() {
