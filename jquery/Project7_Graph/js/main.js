@@ -203,8 +203,8 @@ function updateChart(){
     
     var ordScale = d3.scaleOrdinal()
     .domain(newHit)
-    .range(['#ffd384','#94ebcd','#fbaccc','#d3e0ea','#fa7f72'])
-    .range(d3.schemeDark2);
+    //.range(['#ffd384','#94ebcd','#fbaccc','#d3e0ea','#fa7f72'])
+    .range(d3.schemeSet3);
     
     var colorScale = d3.scaleOrdinal()
     .range(colorbrewer.Reds[10]);
