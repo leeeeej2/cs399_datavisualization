@@ -8,8 +8,8 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Bar",
-            "url": "http://localhost:8000//${workspaceFolder}/index.html",
+            "name": "Project7_Graph",
+            "url": "http://localhost:8000/Project7_Graph/index.html",
             "webRoot": "${workspaceFolder}"
         },
         //{
