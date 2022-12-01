@@ -165,11 +165,13 @@ function updateChart(){
     var xScale = d3.scaleBand().range([0, width]);
     var yScale = d3.scaleLinear().range([height, 0]);
 
+
     var resizeY = d3.max(newHit, function(d){return Math.max(d.value);});
     y.domain([0, resizeY]);
+
     xScale.domain(newHit.map(function(d){return d.key}));
     yScale.domain([0, resizeY - 1]);
-
+    
     yAxisGroup.transition().duration(1000)
     .call(d3.axisLeft(y));
 
@@ -182,6 +184,9 @@ function updateChart(){
     .range(['#ffd384','#94ebcd','#fbaccc','#d3e0ea','#fa7f72'])
     .range(d3.schemeDark2);
     
+    var colorScale = d3.scaleOrdinal()
+    .range(colorbrewer.Reds[10]);
+
     g.selectAll(".bar").remove(); 
 
     g.selectAll(".bar")
@@ -359,6 +364,7 @@ function updateChart(){
     .attr("y", function(d) { return yScale(d.value); })
     .attr("width", width/10)
     .attr("height", function(d) { return height - yScale(d.value); })
-    .attr("fill", function(d) { return ordScale(d.value); });
+    .attr('fill', (d) => colorScale(yScale(d.value)));
+    //.attr("fill", function(d) { return ordScale(d.value); });
 }
 
