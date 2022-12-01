@@ -2,7 +2,8 @@
     cs399
     uijin.lee
     hagyeong.kim
-    assignment6
+    s.hong
+    project 7
  */
 var Num = 4;
 var Hit = [];
@@ -275,15 +276,19 @@ function updateChart(){
                    .enter();
         
         var path = d3.arc()
-                    .innerRadius(radius * 0.5)
-                    .outerRadius(radius * 0.8)
+                    .innerRadius(radius * 0.4)
+                    .outerRadius(radius * 0.7)
+                    .startAngle(function(d){ return d.startAngle - Math.PI/2;})
+                    .endAngle(function(d) {return d.endAngle - Math.PI/2;})
                     .padAngle(.02)
                     .padRadius(100)
                     .cornerRadius(2);
 
         var outerArc = d3.arc()
                 .innerRadius(radius * 0.9)
-                .outerRadius(radius * 0.9);
+                .outerRadius(radius * 0.9)
+                .startAngle(function(d){ return d.startAngle - Math.PI/2;})
+                .endAngle(function(d) {return d.endAngle - Math.PI/2;})
 
         arc.append("path")
          .attr("d", path)
@@ -317,13 +322,13 @@ function updateChart(){
                   var pos2 = outerArc.centroid(d);
                   //console.log(pos);
                   var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
-                  pos2[0] = radius * 0.99 * (midangle < 3.14 ? 1 : -1) + (width / 2 - 50);
+                  pos2[0] = radius * 0.95 * (midangle < Math.PI ? 1 : -1) + (width / 2 - 50);
                   pos2[1] += height * 1.7;
                   return 'translate(' + pos2 + ')';
                 })
             .style('text-anchor', function(d) {
                   var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
-                  return (midangle < 3.14 ? 'start' : 'end')
+                  return (midangle < Math.PI ? 'start' : 'end')
               });
         //console.log(d_);
 
@@ -342,7 +347,7 @@ function updateChart(){
                 var posB = outerArc.centroid(d) 
                 var posC = outerArc.centroid(d); 
                 var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2 
-                posC[0] = radius * 0.95 * (midangle < 3.14 ? 1 : -1); 
+                posC[0] = radius * 0.95 * (midangle < Math.PI ? 1 : -1); 
                 return [posA, posB, posC];
                 }
             })
