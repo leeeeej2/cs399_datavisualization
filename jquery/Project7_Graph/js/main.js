@@ -394,7 +394,7 @@ function updateChart(){
     .attr("y", function(d) { return yScale(d.value); })
     .attr("width", width/10)
     .attr("height", function(d) { return height - yScale(d.value); })
-    .attr("fill", 'steelblue');
+    .attr("fill", "#9ac7e1");
     //.attr('fill', (d) => colorScale(yScale(d.value)));
 
     d3.select("#selectButton").on("change", function(d){
