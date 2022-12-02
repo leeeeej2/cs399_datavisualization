@@ -304,7 +304,7 @@ function updateChart(){
         .attr("class", "pies")
          .attr("d", path)
          .attr("fill", function(d) { return ordScale(d.data.value); })
-         .attr("transform", "translate(" + (width / 2 - 280) + "," + height * 1.7 + ")");
+         .attr("transform", "translate(" + (width / 2 - 250) + "," + height * 1.7 + ")");
 
         g.selectAll('allLabels')
             .data(d_)
@@ -315,7 +315,7 @@ function updateChart(){
                 if(d.value === d.value) {
                     return d.data.key + " / " + d.data.value + "(ms)"
                 }} )
-            .attr("x", width / 2 - 120)
+            .attr("x", width / 2 - 65)
             .attr("y", function(d, i){return height * 1.4 + i * (30);} )
             .attr("font-weight", 550)
             .style('fill', 'black')
@@ -329,7 +329,7 @@ function updateChart(){
             .attr("cx", function(d) {
                 if(d.value === d.value) 
                 {
-                    return width / 2 - 130;
+                    return width / 2 - 80;
                 }
                 else
                 {
@@ -342,8 +342,8 @@ function updateChart(){
                     return height * 1.39 + i * (30);
                 } })
             .attr("r", 7)
-            .style("fill", function(d){ return ordScale(d.data.value)})
-
+            .style("fill", function(d){ return ordScale(d.data.value)});
+            
         /////////////////////
         g.append("text")
                 .attr("class", "value")
