@@ -27,13 +27,14 @@ std::chrono::time_point<std::chrono::steady_clock> timerStart;
 std::map<ULONG64, SampleInfo> samples;
 std::vector<std::map<ULONG64, SampleInfo>> SampleVector;
 
-	static PSYMBOL_INFO GetSymbol(DWORD64 address, PSYMBOL_INFO buff) {
-    PDWORD64 displacement = 0;
-    PSYMBOL_INFO symbol = (PSYMBOL_INFO)buff;
-    symbol->SizeOfStruct = sizeof(SYMBOL_INFO);
-    symbol->MaxNameLen = MAX_SYM_NAME;
-    SymFromAddr(GetCurrentProcess(), address, displacement, symbol);
-    return symbol;
+static PSYMBOL_INFO GetSymbol(DWORD64 address, PSYMBOL_INFO buff) {
+
+	PDWORD64 displacement = 0;
+	PSYMBOL_INFO symbol = (PSYMBOL_INFO)buff;
+	symbol->SizeOfStruct = sizeof(SYMBOL_INFO);
+	symbol->MaxNameLen = MAX_SYM_NAME;
+	SymFromAddr(GetCurrentProcess(), address, displacement, symbol);
+	return symbol;
 }
 
 void Profiler::Init() {
